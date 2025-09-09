@@ -4,6 +4,9 @@ description = "Simple fixed-rate decentralized exchange on Stacks"
 authors = ["Midorichie"]
 license = "MIT"
 
+[contracts.sip-010-trait]
+path = "contracts/traits/sip-010-trait.clar"
+
 [contracts.token-a]
 path = "contracts/token-a.clar"
 
