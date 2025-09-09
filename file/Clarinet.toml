@@ -1,18 +1,25 @@
 [project]
 name = "fixed-price-dex"
-description = "Simple fixed-rate decentralized exchange on Stacks"
-authors = ["Midorichie"]
-license = "MIT"
-
-[contracts.sip-010-trait]
-path = "contracts/traits/sip-010-trait.clar"
+authors = []
+description = "A simple fixed-rate DEX with token vault"
+telemetry = false
+requirements = []
 
 [contracts.token-a]
 path = "contracts/token-a.clar"
+depends_on = ["traits/sip-010-trait"]
 
 [contracts.token-b]
 path = "contracts/token-b.clar"
+depends_on = ["traits/sip-010-trait"]
 
 [contracts.dex]
 path = "contracts/dex.clar"
+depends_on = ["token-a", "token-b", "traits/sip-010-trait"]
 
+[contracts.vault]
+path = "contracts/vault.clar"
+depends_on = ["traits/sip-010-trait"]
+
+[contracts.sip-010-trait]
+path = "contracts/traits/sip-010-trait.clar"
