@@ -1,25 +1,23 @@
-(use-trait ft-trait .token-a.ft-trait)
-(use-trait ft-trait .token-b.ft-trait)
+;; Import SIP-010 trait
+(use-trait sip10-trait .sip-010-trait.sip-010-trait)
 
-(define-constant rate u2)
+(define-constant fixed-rate u2)
 
-;; Swap Token A -> B
-(define-public (swap-a-for-b (amount-a uint))
-  (let ((amount-b (* amount-a rate)))
+(define-public (swap-a-for-b (amount uint))
+  (let ((amount-b (* amount fixed-rate)))
     (begin
-      (try! (contract-call? .token-a transfer amount-a tx-sender contract-principal))
-      (try! (contract-call? .token-b transfer amount-b contract-principal tx-sender))
-      (ok {swapped-a: amount-a, received-b: amount-b})
+      (try! (contract-call? .token-a transfer amount tx-sender (as-contract tx-sender) none))
+      (try! (contract-call? .token-b transfer amount-b (as-contract tx-sender) tx-sender none))
+      (ok {swapped-a: amount, received-b: amount-b})
     )
   )
 )
 
-;; Swap Token B -> A
 (define-public (swap-b-for-a (amount-b uint))
-  (let ((amount-a (/ amount-b rate)))
+  (let ((amount-a (/ amount-b fixed-rate)))
     (begin
-      (try! (contract-call? .token-b transfer amount-b tx-sender contract-principal))
-      (try! (contract-call? .token-a transfer amount-a contract-principal tx-sender))
+      (try! (contract-call? .token-b transfer amount-b tx-sender (as-contract tx-sender) none))
+      (try! (contract-call? .token-a transfer amount-a (as-contract tx-sender) tx-sender none))
       (ok {swapped-b: amount-b, received-a: amount-a})
     )
   )
