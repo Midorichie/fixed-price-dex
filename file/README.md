@@ -1,15 +1,36 @@
-# Fixed-Price DEX (Stacks / Clarity)
+# Fixed Price DEX with Token Vault
 
-This is a simple decentralized exchange (DEX) contract on the Stacks blockchain.
-It allows users to swap Token A for Token B at a fixed rate, and vice versa.
+## Overview
+This project implements a simple fixed-price DEX and a secure token vault on the Stacks blockchain.  
+It follows the SIP-010 fungible token standard.
 
-## Features
-- Fixed-rate swaps (configurable inside the contract)
-- Uses SIP-010 fungible tokens
-- Simple, modular Clarity implementation
+### Contracts
+- `token-a.clar`: Example SIP-010 token.
+- `token-b.clar`: Example SIP-010 token.
+- `dex.clar`: Fixed-rate DEX with improved validation and security checks.
+- `vault.clar`: Simple token vault for deposits and withdrawals.
+- `traits/sip-010-trait.clar`: Imported SIP-010 trait.
 
-## Project Setup
-1. Install [Clarinet](https://docs.hiro.so/clarinet/getting-started).
-2. Initialize project:
-   ```bash
-   clarinet new fixed-price-dex
+---
+
+## Phase 2 Features
+- **DEX Enhancements**
+  - Swap fees added (default: 1% sent to contract owner).
+  - Rejects swaps of `0` tokens.
+  - Ensures only SIP-010 compliant tokens are used.
+  - Security improvements to reduce risk of misuse.
+
+- **Vault Contract**
+  - Deposit SIP-010 tokens into the vault.
+  - Withdraw tokens securely.
+  - Balances tracked per user.
+  - Only the depositor can withdraw.
+
+---
+
+## Usage
+
+### Deploying Contracts
+```sh
+clarinet check
+clarinet console
