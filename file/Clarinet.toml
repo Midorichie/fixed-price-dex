@@ -1,0 +1,15 @@
+[project]
+name = "fixed-price-dex"
+description = "Simple fixed-rate decentralized exchange on Stacks"
+authors = ["Midorichie"]
+license = "MIT"
+
+[contracts.token-a]
+path = "contracts/token-a.clar"
+
+[contracts.token-b]
+path = "contracts/token-b.clar"
+
+[contracts.dex]
+path = "contracts/dex.clar"
+
