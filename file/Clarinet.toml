@@ -1,25 +1,58 @@
 [project]
-name = "fixed-price-dex"
-authors = []
-description = "A simple fixed-rate DEX with token vault"
+name = "advanced-defi-protocol"
+authors = ["DeFi Team"]
+description = "A comprehensive DeFi protocol with AMM DEX, liquidity pools, governance, and price oracles"
 telemetry = false
-requirements = []
+requirements = [
+    { contract_id = "SP3FBR2AGK5H9QBDH3EEN6DF8EK8JY7RX8QJ5SVTE.sip-010-trait-ft-standard" }
+]
 
+# Trait definitions
+[contracts.sip-010-trait]
+path = "contracts/traits/sip-010-trait.clar"
+
+# Core token contracts
 [contracts.token-a]
 path = "contracts/token-a.clar"
-depends_on = ["traits/sip-010-trait"]
+depends_on = ["sip-010-trait"]
 
 [contracts.token-b]
 path = "contracts/token-b.clar"
-depends_on = ["traits/sip-010-trait"]
+depends_on = ["sip-010-trait"]
+
+# Core protocol contracts
+[contracts.vault]
+path = "contracts/vault.clar"
+depends_on = ["sip-010-trait"]
 
 [contracts.dex]
 path = "contracts/dex.clar"
-depends_on = ["token-a", "token-b", "traits/sip-010-trait"]
+depends_on = ["token-a", "token-b", "sip-010-trait"]
 
-[contracts.vault]
-path = "contracts/vault.clar"
-depends_on = ["traits/sip-010-trait"]
+# New advanced contracts
+[contracts.governance]
+path = "contracts/governance.clar"
+depends_on = ["sip-010-trait", "vault"]
 
-[contracts.sip-010-trait]
-path = "contracts/traits/sip-010-trait.clar"
+[contracts.price-oracle]
+path = "contracts/price-oracle.clar"
+depends_on = ["sip-010-trait", "vault"]
+
+# Development and testing
+[repl.development]
+costs_version = 3
+parser_version = 2
+
+# Deployment settings
+[deployment]
+[deployment.devnet]
+wallet = "wallets/deployer-wallet.json"
+node_rpc_api = "http://localhost:20443"
+
+[deployment.testnet]
+wallet = "wallets/deployer-wallet.json"
+node_rpc_api = "https://stacks-node-api.testnet.stacks.co"
+
+[deployment.mainnet]
+wallet = "wallets/deployer-wallet.json"
+node_rpc_api = "https://stacks-node-api.mainnet.stacks.co"
